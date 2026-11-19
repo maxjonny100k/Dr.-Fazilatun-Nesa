@@ -1,0 +1,8 @@
+{
+  "name": "Dr. Fazilatun Nesa (Bristy) — Eye Specialist & Phaco Surgeon",
+  "description": "Official clinic portal and online serial booking system for Dr. Fazilatun Nesa (Bristy), MBBS, BCS (Health), MCPS, FCPS (Eye), Eye Specialist & Phaco Surgeon at Khulna Medical College Hospital and Bangladesh Eye Hospital Khulna Ltd.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
