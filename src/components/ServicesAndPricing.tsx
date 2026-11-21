@@ -103,7 +103,7 @@ export const ServicesAndPricing: React.FC<ServicesAndPricingProps> = ({
                       <Sparkles className="w-4 h-4" />
                       <span>
                         {lang === 'bn'
-                          ? 'প্রধান বিশেষায়িত সেবা · নিয়মিত ক্যাটার্যাক্ট সার্জারি'
+                          ? 'প্রধান বিশেষায়িত সেবা · নিয়মিত ক্যাটারাক্ট সার্জারি'
                           : 'Flagship Specialty · Routine Cataract Surgery'}
                       </span>
                     </div>
@@ -116,7 +116,7 @@ export const ServicesAndPricing: React.FC<ServicesAndPricingProps> = ({
 
                     <p className="text-sm sm:text-base text-sky-100/90 leading-relaxed">
                       {lang === 'bn'
-                        ? 'আমাদের এখানে নিয়মিত আধুনিক সেলাইবিহীন ও ব্যথাহীন ক্যাটার্যাক্ট (ছানি) সার্জারি করা হয়। প্রিমিয়াম ফোল্ডেবল লেন্স (Monofocal, Multifocal, Toric) এবং ছানি অপারেশনের সময়সূচি ও বিস্তারিত প্যাকেজের জন্য সরাসরি যোগাযোগ করুন।'
+                        ? 'আমাদের এখানে নিয়মিত আধুনিক সেলাইবিহীন ফ্যাকো সার্জারি ও ব্যথাহীন ফ্যাকো সার্জারি পদ্ধতিতে ক্যাটারাক্ট (ছানি) অপারেশন করা হয়। প্রিমিয়াম ফোল্ডেবল লেন্স (Monofocal, Multifocal, Toric) এবং ছানি অপারেশনের সময়সূচি ও বিস্তারিত প্যাকেজের জন্য সরাসরি যোগাযোগ করুন।'
                         : 'Routine stitchless, injection-free phacoemulsification cataract surgery is performed regularly at our chamber. Please contact us directly for intraocular lens options, pre-op biometry, and package details.'}
                     </p>
 
@@ -174,7 +174,8 @@ export const ServicesAndPricing: React.FC<ServicesAndPricingProps> = ({
                 <img
                   src={IMAGES.phacoOT}
                   alt={lang === 'bn' ? 'ফ্যাকো ছানি অপারেশন থিয়েটার' : 'Phaco Cataract Operating Theatre'}
-                  loading="eager"
+                  loading="lazy"
+                  decoding="async"
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover object-center"
                 />
@@ -194,7 +195,8 @@ export const ServicesAndPricing: React.FC<ServicesAndPricingProps> = ({
                   src={srv.image}
                   alt=""
                   aria-hidden="true"
-                  loading="eager"
+                  loading="lazy"
+                  decoding="async"
                   referrerPolicy="no-referrer"
                   className="absolute inset-0 w-full h-full object-cover object-center opacity-22 pointer-events-none select-none"
                 />
@@ -284,7 +286,7 @@ export const ServicesAndPricing: React.FC<ServicesAndPricingProps> = ({
                 </h2>
                 <p className="mt-2.5 text-sm sm:text-base text-slate-600">
                   {lang === 'bn'
-                    ? 'যেকোনো সার্জারিতে ক্লিক করলে তার বিবরণ ও ছবি দেখতে পারবেন। ক্যাটার্যাক্ট (ছানি) সার্জারির লেন্স প্যাকেজ জানতে সরাসরি যোগাযোগ করুন।'
+                    ? 'যেকোনো সার্জারিতে ক্লিক করলে তার বিবরণ ও ছবি দেখতে পারবেন। ক্যাটারাক্ট (ছানি) সার্জারির লেন্স প্যাকেজ জানতে সরাসরি যোগাযোগ করুন।'
                     : 'Tap any procedure below to view details and visual guide. Contact us directly for routine Phaco Cataract lens packages.'}
                 </p>
               </div>
@@ -310,7 +312,7 @@ export const ServicesAndPricing: React.FC<ServicesAndPricingProps> = ({
             <LangSlide lang={lang}>
               <div className="space-y-1">
                 <p className="text-xs font-semibold text-teal-300">
-                  {lang === 'bn' ? 'নিয়মিত ক্যাটার্যাক্ট (ছানি) অপারেশন' : 'Routine Cataract (Phaco / SICS) Surgery'}
+                  {lang === 'bn' ? 'নিয়মিত ক্যাটারাক্ট (ছানি) অপারেশন' : 'Routine Cataract (Phaco / SICS) Surgery'}
                 </p>
                 <p className="text-base sm:text-lg font-bold">
                   {lang === 'bn'

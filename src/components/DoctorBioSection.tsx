@@ -99,7 +99,8 @@ export const DoctorBioSection: React.FC<DoctorBioSectionProps> = ({ lang, onBook
                 <img
                   src={IMAGES.doctorLogo}
                   alt={CLINIC_INFO.doctorName[lang]}
-                  loading="eager"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-auto object-contain"
                 />
               </div>

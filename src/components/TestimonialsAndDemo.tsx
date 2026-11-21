@@ -233,7 +233,7 @@ export const TestimonialsAndDemo: React.FC<TestimonialsAndDemoProps> = ({
                 ref={videoRef}
                 src={CLINIC_VIDEO.src}
                 playsInline
-                preload="metadata"
+                preload="none"
                 onClick={togglePlay}
                 onTimeUpdate={() => {
                   if (videoRef.current) setCurrentTime(videoRef.current.currentTime);

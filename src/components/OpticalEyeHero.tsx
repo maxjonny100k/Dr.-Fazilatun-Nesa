@@ -147,7 +147,8 @@ export const OpticalEyeHero: React.FC<OpticalEyeHeroProps> = ({
                     src={stage.image}
                     alt={lang === 'bn' ? stage.layerBn : stage.layerEn}
                     loading="eager"
-                    decoding="sync"
+                    decoding="async"
+                    fetchPriority={i === 0 ? 'high' : 'low'}
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover object-center"
                   />
@@ -262,10 +263,10 @@ export const OpticalEyeHero: React.FC<OpticalEyeHeroProps> = ({
                   {/* Prominent Cataract Notice */}
                   <div className="rounded-2xl bg-[#E1F3F2]/85 border border-teal-700/25 px-3.5 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm text-[#08333B] leading-relaxed">
                     <strong className="font-bold text-teal-900">
-                      {lang === 'bn' ? 'নিয়মিত ক্যাটার্যাক্ট (ছানি) সার্জারি: ' : 'Routine Cataract Surgery: '}
+                      {lang === 'bn' ? 'নিয়মিত ক্যাটারাক্ট (ছানি) সার্জারি: ' : 'Routine Cataract Surgery: '}
                     </strong>
                     {lang === 'bn'
-                      ? 'আমাদের এখানে নিয়মিত আধুনিক সেলাইবিহীন ও ব্যথাহীন ক্যাটার্যাক্ট (ছানি) সার্জারি করা হয়। লেন্স ও সার্জারি সম্পর্কে জানতে সরাসরি যোগাযোগ করুন।'
+                      ? 'আমাদের এখানে নিয়মিত আধুনিক সেলাইবিহীন ফ্যাকো সার্জারি ও ব্যথাহীন ফ্যাকো সার্জারি পদ্ধতিতে ক্যাটারাক্ট (ছানি) অপারেশন করা হয়। লেন্স ও সার্জারি সম্পর্কে জানতে সরাসরি যোগাযোগ করুন।'
                       : 'Modern stitchless, painless cataract surgery is performed regularly here. Contact directly for lens options and scheduling.'}
                   </div>
                 </div>

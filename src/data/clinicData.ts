@@ -26,16 +26,16 @@ export const CLINIC_INFO = {
     en: 'BCS (Health) Cadre · Dept. of Ophthalmology, Khulna Medical College Hospital',
   },
   chamberLine: {
-    bn: 'কনসালটেন্ট: বাংলাদেশ আই হসপিটাল খুলনা লিঃ (৬ বি, মজিদ সরণি, শিববাড়ী, খুলনা - ৯১০০)',
-    en: 'Consultant: Bangladesh Eye Hospital Khulna Ltd. (6B, Majid Sarani, Shib Bari, Khulna - 9100)',
+    bn: 'কনসালটেন্ট: বাংলাদেশ আই হসপিটাল খুলনা লিঃ (৯ বি, মজিদ সরণি, শিববাড়ী, খুলনা - ৯১০০)',
+    en: 'Consultant: Bangladesh Eye Hospital Khulna Ltd. (9B, Majid Sarani, Shib Bari, Khulna - 9100)',
   },
   chamberShort: {
-    bn: 'বাংলাদেশ আই হসপিটাল খুলনা লিঃ, ৬ বি, মজিদ সরণি, শিববাড়ী, খুলনা - ৯১০০',
-    en: 'Bangladesh Eye Hospital Khulna Ltd., 6B, Majid Sarani, Shib Bari, Khulna - 9100',
+    bn: 'বাংলাদেশ আই হসপিটাল খুলনা লিঃ, ৯ বি, মজিদ সরণি, শিববাড়ী, খুলনা - ৯১০০',
+    en: 'Bangladesh Eye Hospital Khulna Ltd., 9B, Majid Sarani, Shib Bari, Khulna - 9100',
   },
   scheduleSummary: {
-    bn: 'শনি, সোম-বুধ (দুপুর ২টা - রাত ৬টা) · রবি, বৃহস্পতি (দুপুর ২টা - বিকাল ৫টা) · শুক্রবার বন্ধ',
-    en: 'Sat, Mon-Wed (2:00 PM - 6:00 PM) · Sun, Thu (2:00 PM - 5:00 PM) · Friday Closed',
+    bn: 'শনি, সোম ও বুধবার (দুপুর ৩টা - রাত ৮টা) · অন্যান্য দিন বন্ধ',
+    en: 'Sat, Mon & Wed (3:00 PM - 8:00 PM) · Closed on other days',
   },
   serialNumber: '01345-786806',
   serialDigits: '01345786806',
@@ -44,7 +44,7 @@ export const CLINIC_INFO = {
   doctorFacebook: 'https://www.facebook.com/share/1KBRrLcWBe/',
   hospitalFacebook: 'https://fb.com/behkhulna',
   googleMapsUrl:
-    'https://www.google.com/maps/search/?api=1&query=Bangladesh+Eye+Hospital+Khulna+6B+Majid+Sarani+Shib+Bari+Khulna',
+    'https://www.google.com/maps/search/?api=1&query=Bangladesh+Eye+Hospital+Khulna+9B+Majid+Sarani+Shib+Bari+Khulna',
   poweredByName: 'Procharomedia',
   poweredByUrl: 'https://procharmedia.vercel.app/',
 };
@@ -57,12 +57,12 @@ export const IMAGES = {
   doctorLogo: '/assets/aistudio/WhatsApp_Image_2026-11-18_at_5.58.03_PM_46550012.jpeg',
   phacoOT: '/src/assets/images/phaco_surgery_ot_1794987419852.jpg',
   servicePterygium: '/src/assets/images/service_pterygium_1795086492699.jpg',
-  serviceSquint: '/src/assets/images/service_squint_1795086492263.jpg',
-  servicePtosis: '/src/assets/images/service_ptosis_1795086492628.jpg',
-  serviceOcularTrauma: '/src/assets/images/service_ocular_trauma_1795086492015.jpg',
-  servicePediatricLacrimal: '/src/assets/images/service_pediatric_lacrimal_1795086492576.jpg',
-  serviceOculoplasty: '/src/assets/images/service_oculoplasty_1795086492682.jpg',
-  serviceGlaucomaRetina: '/src/assets/images/service_glaucoma_retina_1795086492398.jpg',
+  serviceSquint: '/src/assets/images/service_squint_v3_1795251626500.jpg',
+  servicePtosis: '/src/assets/images/service_ptosis_v2_1795251606079.jpg',
+  serviceOcularTrauma: '/src/assets/images/service_trauma_v2_1795251606104.jpg',
+  servicePediatricLacrimal: '/src/assets/images/service_pediatric_v2_1795251606118.jpg',
+  serviceOculoplasty: '/src/assets/images/service_oculoplasty_v2_1795251605996.jpg',
+  serviceGlaucomaRetina: '/src/assets/images/service_glaucoma_v2_1795251606909.jpg',
 };
 
 export const CLINIC_VIDEO = {
@@ -112,10 +112,10 @@ export const SERVICES: ServiceItem[] = [
     id: 'phaco-cataract',
     image: IMAGES.phacoOT,
     featured: true,
-    titleBn: 'সেলাইবিহীন ফ্যাকো ছানি — ব্যথাহীন ফ্যাকো ছানি অপারেশন',
+    titleBn: 'সেলাইবিহীন ফ্যাকো সার্জারি — ব্যথাহীন ফ্যাকো সার্জারি ও ক্যাটারাক্ট অপারেশন',
     titleEn: 'Stitchless Phaco Cataract — Painless Cataract Micro-Surgery',
     summaryBn:
-      'উন্নত প্রযুক্তির সেলাইবিহীন ও ইনজেকশনবিহীন ব্যথাহীন ফ্যাকো পদ্ধতিতে চোখের ছানি অপারেশন এবং প্রিমিয়াম ফোল্ডেবল লেন্স সংযোজন।',
+      'উন্নত প্রযুক্তির সেলাইবিহীন ও ইনজেকশনবিহীন ব্যথাহীন ফ্যাকো সার্জারি পদ্ধতিতে চোখের ক্যাটারাক্ট (ছানি) অপারেশন এবং প্রিমিয়াম ফোল্ডেবল লেন্স সংযোজন।',
     summaryEn:
       'Advanced sutureless, injection-free painless phacoemulsification cataract surgery with premium foldable intraocular lens (IOL) implantation.',
     pointsBn: [
@@ -127,7 +127,7 @@ export const SERVICES: ServiceItem[] = [
       'Micro-incision sutureless technique with no large bandage',
     ],
     detailsBn:
-      'আমাদের চেম্বারে নিয়মিত আধুনিক ফ্যাকো ও মাইক্রো-সার্জিক্যাল ক্যাটার্যাক্ট (ছানি) অপারেশন সম্পন্ন করা হয়। মাত্র ২.২ মিমি সূক্ষ্ম ছিদ্রের মাধ্যমে আল্ট্রাসাউন্ড প্রযুক্তিতে ঘোলাটে লেন্স অপসারণ করে উন্নতমানের কৃত্রিম ফোল্ডেবল লেন্স স্থাপন করা হয়। লেন্স ও প্যাকেজ সম্পর্কে জানতে সরাসরি যোগাযোগ করুন।',
+      'আমাদের চেম্বারে নিয়মিত আধুনিক সেলাইবিহীন ফ্যাকো সার্জারি ও ব্যথাহীন ফ্যাকো সার্জারি পদ্ধতিতে ক্যাটারাক্ট (ছানি) অপারেশন সম্পন্ন করা হয়। মাত্র ২.২ মিমি সূক্ষ্ম ছিদ্রের মাধ্যমে আল্ট্রাসাউন্ড প্রযুক্তিতে ঘোলাটে লেন্স অপসারণ করে উন্নতমানের কৃত্রিম ফোল্ডেবল লেন্স স্থাপন করা হয়। লেন্স ও প্যাকেজ সম্পর্কে জানতে সরাসরি যোগাযোগ করুন।',
     detailsEn:
       'Routine cataract micro-surgery is performed regularly using advanced 2.2mm micro-incision phacoemulsification technology with foldable Monofocal, Multifocal, and Toric IOL options. Contact us directly for personalized lens guidance and package consultation.',
     recoveryBn: 'অপারেশনের সময়: ১০–১৫ মিনিট · পরদিন থেকেই স্বাভাবিক দৃষ্টি',
@@ -681,13 +681,13 @@ export const FAQS = [
   {
     qBn: 'ডাক্তারের চেম্বার কোথায় এবং রোগী দেখার সময়সূচি কী?',
     qEn: 'Where is the chamber located and what are the consultation hours?',
-    aBn: 'চেম্বার: বাংলাদেশ আই হসপিটাল খুলনা লিঃ, ৬ বি, মজিদ সরণি, শিববাড়ী, খুলনা - ৯১০০। সময়সূচি: শনি, সোম থেকে বুধবার দুপুর ২টা – রাত ৬টা এবং রবি ও বৃহস্পতিবার দুপুর ২টা – বিকাল ৫টা (শুক্রবার বন্ধ)।',
-    aEn: 'Chamber: Bangladesh Eye Hospital Khulna Ltd., 6B, Majid Sarani, Shib Bari, Khulna - 9100. Hours: Sat & Mon–Wed (2:00 PM – 6:00 PM); Sun & Thu (2:00 PM – 5:00 PM); Friday closed.',
+    aBn: 'চেম্বার: বাংলাদেশ আই হসপিটাল খুলনা লিঃ, ৯ বি, মজিদ সরণি, শিববাড়ী, খুলনা - ৯১০০। রোগী দেখার সময়: প্রতি শনিবার, সোমবার ও বুধবার দুপুর ৩:০০টা থেকে রাত ৮:০০টা পর্যন্ত (অন্যান্য দিন বন্ধ)।',
+    aEn: 'Chamber: Bangladesh Eye Hospital Khulna Ltd., 9B, Majid Sarani, Shib Bari, Khulna - 9100. Visiting Hours: Every Saturday, Monday & Wednesday from 3:00 PM to 8:00 PM.',
   },
   {
-    qBn: 'ফ্যাকো ছানি অপারেশন কি ব্যথাদায়ক এবং এখানে কি নিয়মিত ক্যাটার্যাক্ট সার্জারি হয়?',
+    qBn: 'ফ্যাকো ছানি অপারেশন কি ব্যথাদায়ক এবং এখানে কি নিয়মিত ক্যাটারাক্ট সার্জারি হয়?',
     qEn: 'Is Phaco cataract surgery painful, and is cataract surgery performed regularly here?',
-    aBn: 'না, আধুনিক ফ্যাকো ছানি অপারেশন সম্পূর্ণ ব্যথাহীন, ইনজেকশনবিহীন ও সেলাইবিহীন পদ্ধতি। আমাদের এখানে নিয়মিত ক্যাটার্যাক্ট (ছানি) সার্জারি করা হয়—উপযুক্ত লেন্স ও প্যাকেজ নির্ধারণের জন্য সরাসরি 01345-786806 নম্বরে যোগাযোগ করুন।',
+    aBn: 'না, আধুনিক সেলাইবিহীন ও ব্যথাহীন ফ্যাকো সার্জারি সম্পূর্ণ ইনজেকশনবিহীন ও আরামদায়ক পদ্ধতি। আমাদের এখানে নিয়মিত ক্যাটারাক্ট (ছানি) সার্জারি করা হয়—উপযুক্ত লেন্স ও প্যাকেজ নির্ধারণের জন্য সরাসরি 01345-786806 নম্বরে যোগাযোগ করুন।',
     aEn: 'No — modern phacoemulsification is topical-drop based, injection-free, and sutureless. Routine cataract surgery is performed regularly here; contact 01345-786806 directly for lens options and scheduling.',
   },
   {

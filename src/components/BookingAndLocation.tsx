@@ -47,12 +47,18 @@ export const BookingAndLocation: React.FC<BookingAndLocationProps> = ({
   const [appointmentDate, setAppointmentDate] = useState(() => {
     const d = new Date();
     d.setDate(d.getDate() + 1);
-    if (d.getDay() === 5) d.setDate(d.getDate() + 1);
+    for (let i = 0; i < 7; i++) {
+      const day = d.getDay();
+      if (day === 6 || day === 1 || day === 3) break;
+      d.setDate(d.getDate() + 1);
+    }
     return d.toISOString().split('T')[0];
   });
-  const [timeSlot, setTimeSlot] = useState('দুপুর ০২:০০ - ০৪:০০ টা');
+  const [timeSlot, setTimeSlot] = useState(
+    lang === 'en' ? '3:00 PM - 5:30 PM' : 'দুপুর ০৩:০০ - বিকাল ০৫:৩০ টা'
+  );
   const [serviceName, setServiceName] = useState(
-    'সেলাইবিহীন ফ্যাকো ছানি — ব্যথাহীন ফ্যাকো ছানি অপারেশন'
+    'সেলাইবিহীন ফ্যাকো সার্জারি — ব্যথাহীন ফ্যাকো সার্জারি ও ক্যাটারাক্ট অপারেশন'
   );
   const [notes, setNotes] = useState('');
   const [formError, setFormError] = useState('');
@@ -72,29 +78,27 @@ export const BookingAndLocation: React.FC<BookingAndLocationProps> = ({
     ...SURGERY_PACKAGES.map((p) => `${p.name} — ${p.nameBn}`),
   ];
 
-  const isFridaySelected = (() => {
+  const isValidChamberDay = (() => {
     if (!appointmentDate) return false;
     const parts = appointmentDate.split('-').map(Number);
     const dt = new Date(parts[0], parts[1] - 1, parts[2]);
-    return dt.getDay() === 5;
+    const day = dt.getDay();
+    // Consulting days: Saturday (6), Monday (1), Wednesday (3)
+    return day === 6 || day === 1 || day === 3;
   })();
 
-  const isSunOrThu = (() => {
-    if (!appointmentDate) return false;
-    const parts = appointmentDate.split('-').map(Number);
-    const dt = new Date(parts[0], parts[1] - 1, parts[2]);
-    return dt.getDay() === 0 || dt.getDay() === 4;
-  })();
+  const isNonChamberDay = Boolean(appointmentDate) && !isValidChamberDay;
 
-  const availableSlots = isSunOrThu
-    ? ['দুপুর ০২:০০ - ০৩:৩০ টা', 'বিকাল ০৩:৩০ - ০৫:০০ টা']
-    : ['দুপুর ০২:০০ - ০৪:০০ টা', 'বিকাল ০৪:০০ - সন্ধ্যা ০৬:০০ টা'];
+  const availableSlots =
+    lang === 'en'
+      ? ['3:00 PM - 5:30 PM', '5:30 PM - 8:00 PM']
+      : ['দুপুর ০৩:০০ - বিকাল ০৫:৩০ টা', 'বিকাল ০৫:৩০ - রাত ০৮:০০ টা'];
 
   useEffect(() => {
     if (!availableSlots.includes(timeSlot)) {
       setTimeSlot(availableSlots[0]);
     }
-  }, [appointmentDate]);
+  }, [appointmentDate, lang]);
 
   const triggerAnchorNavigation = (href: string) => {
     const a = document.createElement('a');
@@ -129,11 +133,11 @@ export const BookingAndLocation: React.FC<BookingAndLocationProps> = ({
       );
       return;
     }
-    if (!appointmentDate || isFridaySelected) {
+    if (!appointmentDate || isNonChamberDay) {
       setFormError(
         lang === 'bn'
-          ? 'শুক্রবার চেম্বার বন্ধ থাকে। অনুগ্রহ করে অন্য একটি দিন নির্বাচন করুন।'
-          : 'Chamber is closed on Friday. Please choose another date.'
+          ? 'শুধুমাত্র শনি, সোম ও বুধবার (দুপুর ৩টা – রাত ৮টা) চেম্বার খোলা থাকে। অনুগ্রহ করে শনি, সোম বা বুধবার নির্বাচন করুন।'
+          : 'Chamber operates only on Saturday, Monday & Wednesday (3:00 PM – 8:00 PM). Please pick Sat, Mon, or Wed.'
       );
       return;
     }
@@ -153,7 +157,7 @@ export const BookingAndLocation: React.FC<BookingAndLocationProps> = ({
             `চিকিৎসা / সেবা: ${trimmedService}`,
             ...(trimmedNotes ? [`রোগের বিবরণ: ${trimmedNotes}`] : []),
             '',
-            'চেম্বার: বাংলাদেশ আই হসপিটাল খুলনা লিঃ, ৬ বি, মজিদ সরণি, শিববাড়ী, খুলনা।',
+            'চেম্বার: বাংলাদেশ আই হসপিটাল খুলনা লিঃ, ৯ বি, মজিদ সরণি, শিববাড়ী, খুলনা।',
           ]
         : [
             'Hello, I would like to book an appointment with Dr. Fazilatun Nesa (Bristy).',
@@ -165,7 +169,7 @@ export const BookingAndLocation: React.FC<BookingAndLocationProps> = ({
             `Service: ${trimmedService}`,
             ...(trimmedNotes ? [`Symptoms / Notes: ${trimmedNotes}`] : []),
             '',
-            'Chamber: Bangladesh Eye Hospital Khulna Ltd., 6B Majid Sarani, Shib Bari, Khulna.',
+            'Chamber: Bangladesh Eye Hospital Khulna Ltd., 9B Majid Sarani, Shib Bari, Khulna.',
           ];
 
     const formattedMessage = lines.join('\n');
@@ -240,8 +244,8 @@ export const BookingAndLocation: React.FC<BookingAndLocationProps> = ({
                   {lang === 'bn' ? 'বাংলাদেশ আই হসপিটাল খুলনা লিঃ চেম্বার: ' : 'Chamber Info: '}
                 </strong>
                 {lang === 'bn'
-                  ? '৬ বি, মজিদ সরণি, শিববাড়ী, খুলনা। রোগী দেখেন: শনি, সোম-বুধ (২-৬টা) এবং রবি, বৃহস্পতি (২-৫টা)।'
-                  : '6B, Majid Sarani, Shib Bari, Khulna. Hours: Sat, Mon-Wed (2–6 PM) and Sun, Thu (2–5 PM).'}
+                  ? '৯ বি, মজিদ সরণি, শিববাড়ী, খুলনা। রোগী দেখেন: শনি, সোম ও বুধবার (দুপুর ৩:০০টা – রাত ৮:০০টা)।'
+                  : '9B, Majid Sarani, Shib Bari, Khulna. Hours: Sat, Mon & Wed (3:00 PM – 8:00 PM).'}
               </div>
 
               {confirmedSlip ? (
@@ -347,11 +351,11 @@ export const BookingAndLocation: React.FC<BookingAndLocationProps> = ({
                         onChange={(e) => setAppointmentDate(e.target.value)}
                         className="w-full px-4 py-3 rounded-xl bg-[#F6FAFC] border border-sky-900/20 text-sm text-[#071D38] font-mono-num focus:outline-none focus:ring-2 focus:ring-sky-500"
                       />
-                      {isFridaySelected && (
+                      {isNonChamberDay && (
                         <p className="text-xs text-rose-600 mt-1 font-medium">
                           {lang === 'bn'
-                            ? 'শুক্রবার নিয়মিত চেম্বার বন্ধ থাকে। অনুগ্রহ করে অন্য দিন নির্বাচন করুন।'
-                            : 'Chamber is closed on Friday. Please choose another day.'}
+                            ? 'শুধুমাত্র শনি, সোম ও বুধবার (দুপুর ৩টা – রাত ৮টা) চেম্বার খোলা থাকে। অনুগ্রহ করে শনি, সোম বা বুধবার নির্বাচন করুন।'
+                            : 'Chamber operates only on Saturday, Monday & Wednesday (3:00 PM – 8:00 PM). Please pick Sat, Mon, or Wed.'}
                         </p>
                       )}
                     </div>
@@ -422,7 +426,7 @@ export const BookingAndLocation: React.FC<BookingAndLocationProps> = ({
                   <div className="flex flex-wrap items-center gap-3">
                     <button
                       type="submit"
-                      disabled={isFridaySelected}
+                      disabled={isNonChamberDay}
                       className="glossy-teal-btn w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl disabled:opacity-50 text-white font-bold text-sm transition-transform active:scale-[0.99] cursor-pointer"
                     >
                       <MessageCircle className="w-4 h-4" />
@@ -544,8 +548,8 @@ export const BookingAndLocation: React.FC<BookingAndLocationProps> = ({
                     <MapPin className="w-4 h-4 text-teal-300 shrink-0 mt-0.5" />
                     <span>
                       {lang === 'bn'
-                        ? '৬ বি, মজিদ সরণি, শিববাড়ী, খুলনা - ৯১০০'
-                        : '6B, Majid Sarani, Shib Bari, Khulna - 9100'}
+                        ? '৯ বি, মজিদ সরণি, শিববাড়ী, খুলনা - ৯১০০'
+                        : '9B, Majid Sarani, Shib Bari, Khulna - 9100'}
                     </span>
                   </p>
                 </div>
@@ -553,23 +557,15 @@ export const BookingAndLocation: React.FC<BookingAndLocationProps> = ({
                 <div className="space-y-2.5 pt-4 border-t border-sky-300/15 text-sm">
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-sky-200">
-                      {lang === 'bn' ? 'শনিবার, সোমবার - বুধবার' : 'Sat, Mon - Wed'}
+                      {lang === 'bn' ? 'শনিবার, সোমবার ও বুধবার' : 'Sat, Mon & Wed'}
                     </span>
                     <span className="font-semibold text-white font-mono-num">
-                      {lang === 'bn' ? 'দুপুর ২:০০ - রাত ৬:০০' : '2:00 PM - 6:00 PM'}
+                      {lang === 'bn' ? 'দুপুর ৩:০০ - রাত ৮:০০' : '3:00 PM - 8:00 PM'}
                     </span>
                   </div>
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-sky-200">
-                      {lang === 'bn' ? 'রবিবার, বৃহস্পতিবার' : 'Sun, Thu'}
-                    </span>
-                    <span className="font-semibold text-white font-mono-num">
-                      {lang === 'bn' ? 'দুপুর ২:০০ - বিকাল ৫:০০' : '2:00 PM - 5:00 PM'}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-sky-200">
-                      {lang === 'bn' ? 'শুক্রবার' : 'Friday'}
+                      {lang === 'bn' ? 'রবি, মঙ্গল, বৃহস্পতি ও শুক্রবার' : 'Sun, Tue, Thu & Fri'}
                     </span>
                     <span className="text-teal-300 font-medium">
                       {lang === 'bn' ? 'বন্ধ (জরুরি প্রয়োজনে যোগাযোগ)' : 'Closed (Emergency Contact)'}
@@ -614,8 +610,8 @@ export const BookingAndLocation: React.FC<BookingAndLocationProps> = ({
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                   {lang === 'bn'
-                    ? 'খুলনা শিববাড়ী মোড় থেকে মজিদ সরণিতে প্রবেশ করলেই হাতের কাছে ৬বি ভবনে বাংলাদেশ আই হসপিটাল খুলনা লিঃ।'
-                    : 'Enter Majid Sarani from Shib Bari More, Khulna; Bangladesh Eye Hospital Khulna Ltd. is conveniently situated at Building 6B.'}
+                    ? 'খুলনা শিববাড়ী মোড় থেকে মজিদ সরণিতে প্রবেশ করলেই হাতের কাছে ৯বি ভবনে বাংলাদেশ আই হসপিটাল খুলনা লিঃ।'
+                    : 'Enter Majid Sarani from Shib Bari More, Khulna; Bangladesh Eye Hospital Khulna Ltd. is conveniently situated at Building 9B.'}
                 </p>
               </div>
 
