@@ -54,7 +54,13 @@ export const EducationAndContact: React.FC<EducationAndContactProps> = ({ lang }
     setSentInquiry(null);
 
     const cleanName = senderName.trim();
-    const cleanPhone = phone.replace(/[\s\-]/g, '').trim();
+    const bnToEn = phone.replace(/[০-৯]/g, (ch) => String('০১২৩৪৫৬৭৮৯'.indexOf(ch)));
+    const strippedPhone = bnToEn.replace(/[\s\-()]/g, '').trim();
+    const cleanPhone = strippedPhone.startsWith('+880')
+      ? strippedPhone.slice(3)
+      : strippedPhone.startsWith('880')
+        ? strippedPhone.slice(2)
+        : strippedPhone;
     const cleanMsg = message.trim();
 
     if (cleanName.length < 2 || cleanName.length > 100) {

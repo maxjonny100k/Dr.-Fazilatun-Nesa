@@ -170,6 +170,7 @@ export const OpticalEyeHero: React.FC<OpticalEyeHeroProps> = ({
                     src={IMAGES.doctorLogo}
                     alt={CLINIC_INFO.doctorName[lang]}
                     loading="eager"
+                    referrerPolicy="no-referrer"
                     className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl object-cover border border-white/30 shrink-0"
                   />
                   <div className="min-w-0">

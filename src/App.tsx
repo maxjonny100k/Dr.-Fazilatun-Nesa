@@ -6,6 +6,7 @@ import {
   Menu,
   MessageCircle,
   X,
+  Youtube,
 } from 'lucide-react';
 import { BookingAndLocation } from './components/BookingAndLocation';
 import { DoctorBioSection } from './components/DoctorBioSection';
@@ -98,6 +99,7 @@ export default function App() {
               <img
                 src={IMAGES.doctorLogo}
                 alt={CLINIC_INFO.doctorName[lang]}
+                referrerPolicy="no-referrer"
                 className="w-9 h-9 rounded-xl object-cover border border-white/35 shadow-sm shrink-0"
               />
               <LangSlide lang={lang}>
@@ -210,6 +212,9 @@ export default function App() {
                   <img
                     src={IMAGES.doctorLogo}
                     alt={CLINIC_INFO.doctorName[lang]}
+                    loading="lazy"
+                    decoding="async"
+                    referrerPolicy="no-referrer"
                     className="w-12 h-12 rounded-xl object-cover border border-white/30 shrink-0"
                   />
                   <LangSlide lang={lang}>
@@ -251,6 +256,16 @@ export default function App() {
                   >
                     <ExternalLink className="w-3.5 h-3.5 text-teal-300" />
                     {lang === 'bn' ? 'বাংলাদেশ আই হসপিটাল' : 'BEH Khulna Page'}
+                  </a>
+
+                  <a
+                    href={CLINIC_INFO.doctorYoutube}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-rose-500/15 hover:bg-rose-500/25 border border-rose-400/35 text-xs font-semibold text-white transition-colors"
+                  >
+                    <Youtube className="w-3.5 h-3.5 text-rose-400" />
+                    {lang === 'bn' ? 'ডাক্তারের ইউটিউব চ্যানেল' : 'Doctor YouTube'}
                   </a>
                 </div>
               </div>

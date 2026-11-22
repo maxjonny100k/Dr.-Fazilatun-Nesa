@@ -35,6 +35,21 @@ interface WhatsAppSlip {
   whatsappHref: string;
 }
 
+function toLocalDateInput(d: Date): string {
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+function normalizeBdPhone(raw: string): string {
+  const bnToEn = raw.replace(/[০-৯]/g, (ch) => String('০১২৩৪৫৬৭৮৯'.indexOf(ch)));
+  const stripped = bnToEn.replace(/[\s\-()]/g, '').trim();
+  if (stripped.startsWith('+880')) return stripped.slice(3);
+  if (stripped.startsWith('880')) return stripped.slice(2);
+  return stripped;
+}
+
 export const BookingAndLocation: React.FC<BookingAndLocationProps> = ({
   lang,
   preselectedService,
@@ -47,14 +62,10 @@ export const BookingAndLocation: React.FC<BookingAndLocationProps> = ({
   const [appointmentDate, setAppointmentDate] = useState(() => {
     const d = new Date();
     d.setDate(d.getDate() + 1);
-    for (let i = 0; i < 7; i++) {
-      const day = d.getDay();
-      if (day === 6 || day === 1 || day === 3) break;
-      d.setDate(d.getDate() + 1);
-    }
-    return d.toISOString().split('T')[0];
+    if (d.getDay() === 5) d.setDate(d.getDate() + 1);
+    return toLocalDateInput(d);
   });
-  const [timeSlot, setTimeSlot] = useState(
+  const [timeSlot, setTimeSlot] = useState(() =>
     lang === 'en' ? '3:00 PM - 5:30 PM' : 'দুপুর ০৩:০০ - বিকাল ০৫:৩০ টা'
   );
   const [serviceName, setServiceName] = useState(
@@ -78,19 +89,23 @@ export const BookingAndLocation: React.FC<BookingAndLocationProps> = ({
     ...SURGERY_PACKAGES.map((p) => `${p.name} — ${p.nameBn}`),
   ];
 
-  const isValidChamberDay = (() => {
-    if (!appointmentDate) return false;
+  const selectedDayOfWeek = (() => {
+    if (!appointmentDate) return -1;
     const parts = appointmentDate.split('-').map(Number);
     const dt = new Date(parts[0], parts[1] - 1, parts[2]);
-    const day = dt.getDay();
-    // Consulting days: Saturday (6), Monday (1), Wednesday (3)
-    return day === 6 || day === 1 || day === 3;
+    return dt.getDay();
   })();
 
-  const isNonChamberDay = Boolean(appointmentDate) && !isValidChamberDay;
+  // Closed on Friday (5); Sun (0) & Thu (4) are 3–5 PM; Sat (6), Mon (1), Tue (2), Wed (3) are 3–8 PM
+  const isFridaySelected = selectedDayOfWeek === 5;
+  const isSunOrThuSelected = selectedDayOfWeek === 0 || selectedDayOfWeek === 4;
+  const isNonChamberDay = !appointmentDate || isFridaySelected;
 
-  const availableSlots =
-    lang === 'en'
+  const availableSlots = isSunOrThuSelected
+    ? lang === 'en'
+      ? ['3:00 PM - 5:00 PM']
+      : ['দুপুর ০৩:০০ - বিকাল ০৫:০০ টা']
+    : lang === 'en'
       ? ['3:00 PM - 5:30 PM', '5:30 PM - 8:00 PM']
       : ['দুপুর ০৩:০০ - বিকাল ০৫:৩০ টা', 'বিকাল ০৫:৩০ - রাত ০৮:০০ টা'];
 
@@ -115,7 +130,7 @@ export const BookingAndLocation: React.FC<BookingAndLocationProps> = ({
     setFormError('');
 
     const cleanName = patientName.trim();
-    const cleanPhone = phone.replace(/[\s\-]/g, '').trim();
+    const cleanPhone = normalizeBdPhone(phone);
 
     if (cleanName.length < 2 || cleanName.length > 100) {
       setFormError(
@@ -133,11 +148,11 @@ export const BookingAndLocation: React.FC<BookingAndLocationProps> = ({
       );
       return;
     }
-    if (!appointmentDate || isNonChamberDay) {
+    if (isNonChamberDay) {
       setFormError(
         lang === 'bn'
-          ? 'শুধুমাত্র শনি, সোম ও বুধবার (দুপুর ৩টা – রাত ৮টা) চেম্বার খোলা থাকে। অনুগ্রহ করে শনি, সোম বা বুধবার নির্বাচন করুন।'
-          : 'Chamber operates only on Saturday, Monday & Wednesday (3:00 PM – 8:00 PM). Please pick Sat, Mon, or Wed.'
+          ? 'শুক্রবার চেম্বার বন্ধ থাকে। অনুগ্রহ করে শনি, সোম, মঙ্গল, বুধ (দুপুর ৩টা–রাত ৮টা) অথবা রবি ও বৃহস্পতি (দুপুর ৩টা–বিকাল ৫টা) নির্বাচন করুন।'
+          : 'Chamber is closed on Friday. Please choose Sat, Mon, Tue, Wed (3–8 PM) or Sun & Thu (3–5 PM).'
       );
       return;
     }
@@ -244,8 +259,8 @@ export const BookingAndLocation: React.FC<BookingAndLocationProps> = ({
                   {lang === 'bn' ? 'বাংলাদেশ আই হসপিটাল খুলনা লিঃ চেম্বার: ' : 'Chamber Info: '}
                 </strong>
                 {lang === 'bn'
-                  ? '৯ বি, মজিদ সরণি, শিববাড়ী, খুলনা। রোগী দেখেন: শনি, সোম ও বুধবার (দুপুর ৩:০০টা – রাত ৮:০০টা)।'
-                  : '9B, Majid Sarani, Shib Bari, Khulna. Hours: Sat, Mon & Wed (3:00 PM – 8:00 PM).'}
+                  ? '৯ বি, মজিদ সরণি, শিববাড়ী, খুলনা। রোগী দেখেন: শনি, সোম, মঙ্গল ও বুধবার (দুপুর ৩:০০টা – রাত ৮:০০টা) এবং রবি ও বৃহস্পতিবার (দুপুর ৩:০০টা – বিকাল ৫:০০টা)। শুক্রবার বন্ধ।'
+                  : '9B, Majid Sarani, Shib Bari, Khulna. Hours: Sat, Mon, Tue & Wed (3:00 PM – 8:00 PM) and Sun & Thu (3:00 PM – 5:00 PM). Closed Friday.'}
               </div>
 
               {confirmedSlip ? (
@@ -346,16 +361,16 @@ export const BookingAndLocation: React.FC<BookingAndLocationProps> = ({
                       <input
                         type="date"
                         required
-                        min={new Date().toISOString().split('T')[0]}
+                        min={toLocalDateInput(new Date())}
                         value={appointmentDate}
                         onChange={(e) => setAppointmentDate(e.target.value)}
                         className="w-full px-4 py-3 rounded-xl bg-[#F6FAFC] border border-sky-900/20 text-sm text-[#071D38] font-mono-num focus:outline-none focus:ring-2 focus:ring-sky-500"
                       />
-                      {isNonChamberDay && (
+                      {isFridaySelected && (
                         <p className="text-xs text-rose-600 mt-1 font-medium">
                           {lang === 'bn'
-                            ? 'শুধুমাত্র শনি, সোম ও বুধবার (দুপুর ৩টা – রাত ৮টা) চেম্বার খোলা থাকে। অনুগ্রহ করে শনি, সোম বা বুধবার নির্বাচন করুন।'
-                            : 'Chamber operates only on Saturday, Monday & Wednesday (3:00 PM – 8:00 PM). Please pick Sat, Mon, or Wed.'}
+                            ? 'শুক্রবার চেম্বার বন্ধ থাকে। অনুগ্রহ করে শনি, সোম, মঙ্গল, বুধ (দুপুর ৩টা–রাত ৮টা) অথবা রবি ও বৃহস্পতিবার (দুপুর ৩টা–বিকাল ৫টা) নির্বাচন করুন।'
+                            : 'Closed on Friday. Please choose Sat, Mon, Tue, Wed (3–8 PM) or Sun & Thu (3–5 PM).'}
                         </p>
                       )}
                     </div>
@@ -557,7 +572,7 @@ export const BookingAndLocation: React.FC<BookingAndLocationProps> = ({
                 <div className="space-y-2.5 pt-4 border-t border-sky-300/15 text-sm">
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-sky-200">
-                      {lang === 'bn' ? 'শনিবার, সোমবার ও বুধবার' : 'Sat, Mon & Wed'}
+                      {lang === 'bn' ? 'শনি, সোম, মঙ্গল ও বুধবার' : 'Sat, Mon, Tue & Wed'}
                     </span>
                     <span className="font-semibold text-white font-mono-num">
                       {lang === 'bn' ? 'দুপুর ৩:০০ - রাত ৮:০০' : '3:00 PM - 8:00 PM'}
@@ -565,7 +580,15 @@ export const BookingAndLocation: React.FC<BookingAndLocationProps> = ({
                   </div>
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-sky-200">
-                      {lang === 'bn' ? 'রবি, মঙ্গল, বৃহস্পতি ও শুক্রবার' : 'Sun, Tue, Thu & Fri'}
+                      {lang === 'bn' ? 'রবিবার ও বৃহস্পতিবার' : 'Sun & Thu'}
+                    </span>
+                    <span className="font-semibold text-white font-mono-num">
+                      {lang === 'bn' ? 'দুপুর ৩:০০ - বিকাল ৫:০০' : '3:00 PM - 5:00 PM'}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-sky-200">
+                      {lang === 'bn' ? 'শুক্রবার' : 'Friday'}
                     </span>
                     <span className="text-teal-300 font-medium">
                       {lang === 'bn' ? 'বন্ধ (জরুরি প্রয়োজনে যোগাযোগ)' : 'Closed (Emergency Contact)'}

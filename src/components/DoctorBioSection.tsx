@@ -101,6 +101,7 @@ export const DoctorBioSection: React.FC<DoctorBioSectionProps> = ({ lang, onBook
                   alt={CLINIC_INFO.doctorName[lang]}
                   loading="lazy"
                   decoding="async"
+                  referrerPolicy="no-referrer"
                   className="w-full h-auto object-contain"
                 />
               </div>

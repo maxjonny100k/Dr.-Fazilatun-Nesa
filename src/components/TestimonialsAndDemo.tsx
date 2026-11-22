@@ -9,6 +9,7 @@ import {
   Quote,
   Volume2,
   VolumeX,
+  Youtube,
 } from 'lucide-react';
 import {
   CLINIC_INFO,
@@ -166,8 +167,8 @@ export const TestimonialsAndDemo: React.FC<TestimonialsAndDemoProps> = ({
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600">
                   {lang === 'bn'
-                    ? 'আপনার যেকোনো প্রশ্ন বা অপারেশন সংক্রান্ত পরামর্শের জন্য কল, হোয়াটসঅ্যাপ অথবা ফেসবুক পেজে মেসেজ দিন।'
-                    : 'Reach out anytime via Phone Call, WhatsApp, or our official Facebook page.'}
+                    ? 'আপনার যেকোনো প্রশ্ন বা অপারেশন সংক্রান্ত পরামর্শের জন্য কল, হোয়াটসঅ্যাপ, ফেসবুক অথবা ইউটিউব চ্যানেলে যোগাযোগ করুন।'
+                    : 'Reach out anytime via Phone Call, WhatsApp, or our official Facebook and YouTube channels.'}
                 </p>
               </div>
             </LangSlide>
@@ -197,6 +198,15 @@ export const TestimonialsAndDemo: React.FC<TestimonialsAndDemoProps> = ({
               >
                 <ExternalLink className="w-4 h-4 text-sky-700" />
                 Facebook
+              </a>
+              <a
+                href={CLINIC_INFO.doctorYoutube}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/85 hover:bg-rose-50 border border-rose-600/25 text-[#071D38] font-bold text-sm transition-colors whitespace-nowrap"
+              >
+                <Youtube className="w-4 h-4 text-rose-600" />
+                YouTube
               </a>
             </div>
           </div>
@@ -251,10 +261,15 @@ export const TestimonialsAndDemo: React.FC<TestimonialsAndDemoProps> = ({
                   type="button"
                   onClick={togglePlay}
                   aria-label="Play video"
-                  className="absolute inset-0 flex items-center justify-center bg-slate-950/25 hover:bg-slate-950/15 transition-colors cursor-pointer"
+                  className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-[#061830]/95 via-[#09274D]/85 to-[#083B4C]/90 hover:from-[#071D3A]/90 hover:to-[#0A475B]/85 transition-colors cursor-pointer px-4 text-center"
                 >
-                  <span className="w-16 h-16 sm:w-20 sm:h-20 rounded-full optical-glass-dark flex items-center justify-center text-white shadow-2xl hover:scale-105 transition-transform">
+                  <span className="w-16 h-16 sm:w-20 sm:h-20 rounded-full optical-glass-dark flex items-center justify-center text-white shadow-2xl hover:scale-105 transition-transform border border-white/30">
                     <Play className="w-7 h-7 sm:w-8 sm:h-8 ml-1 fill-current" />
+                  </span>
+                  <span className="text-xs sm:text-sm font-semibold text-sky-100/90 max-w-md">
+                    {lang === 'bn'
+                      ? 'ডাঃ ফজিলাতুন নেছা (বৃষ্টি)-এর সরাসরি পরামর্শ ভিডিও দেখতে প্লে করুন'
+                      : 'Click Play to Watch Dr. Bristy’s Post-Cataract Care Guidance'}
                   </span>
                 </button>
               )}
@@ -329,6 +344,15 @@ export const TestimonialsAndDemo: React.FC<TestimonialsAndDemoProps> = ({
               >
                 <MessageCircle className="w-4 h-4" />
                 WhatsApp ({CLINIC_INFO.serialNumber})
+              </a>
+              <a
+                href={CLINIC_INFO.doctorYoutube}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-rose-500/20 border border-rose-400/40 text-white font-bold text-xs sm:text-sm transition-colors"
+              >
+                <Youtube className="w-4 h-4 text-rose-400" />
+                {lang === 'bn' ? 'ইউটিউব চ্যানেল' : 'YouTube Channel'}
               </a>
             </div>
           </div>

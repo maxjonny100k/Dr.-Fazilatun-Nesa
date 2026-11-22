@@ -385,14 +385,24 @@ export const ServicesAndPricing: React.FC<ServicesAndPricingProps> = ({
                   className="optical-glass-light rounded-2xl p-4 border border-sky-900/20 active:scale-[0.99] transition-transform cursor-pointer space-y-3"
                 >
                   <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <span className="inline-block font-mono-num text-[11px] font-bold text-teal-800 mb-0.5">
-                        #{String(i + 1).padStart(2, '0')}
-                      </span>
-                      <h3 className="text-sm font-bold text-[#071D38] leading-snug break-words">
-                        {pkg.name}
-                      </h3>
-                      <p className="text-xs text-slate-600 mt-0.5 break-words">{pkg.nameBn}</p>
+                    <div className="flex items-start gap-3 min-w-0">
+                      <img
+                        src={pkg.image}
+                        alt={pkg.name}
+                        loading="lazy"
+                        decoding="async"
+                        referrerPolicy="no-referrer"
+                        className="w-16 h-12 rounded-xl object-cover shrink-0 border border-sky-900/15 bg-slate-100"
+                      />
+                      <div className="min-w-0">
+                        <span className="inline-block font-mono-num text-[11px] font-bold text-teal-800 mb-0.5">
+                          #{String(i + 1).padStart(2, '0')}
+                        </span>
+                        <h3 className="text-sm font-bold text-[#071D38] leading-snug break-words">
+                          {pkg.name}
+                        </h3>
+                        <p className="text-xs text-slate-600 mt-0.5 break-words">{pkg.nameBn}</p>
+                      </div>
                     </div>
                     <span className="shrink-0 font-mono-num text-xs font-bold text-[#0B4F8A] bg-white/90 border border-sky-900/15 px-2.5 py-1 rounded-lg">
                       ৳ {pkg.price}
@@ -464,11 +474,23 @@ export const ServicesAndPricing: React.FC<ServicesAndPricingProps> = ({
                       <td className="py-3.5 px-6 font-mono-num text-xs text-slate-500">
                         {String(i + 1).padStart(2, '0')}
                       </td>
-                      <td className="py-3.5 px-6">
-                        <p className="font-bold text-[#071D38] group-hover:text-[#0B5ED7] transition-colors">
-                          {pkg.name}
-                        </p>
-                        <p className="text-xs text-slate-600 mt-0.5">{pkg.nameBn}</p>
+                      <td className="py-3 px-6">
+                        <div className="flex items-center gap-3.5">
+                          <img
+                            src={pkg.image}
+                            alt={pkg.name}
+                            loading="lazy"
+                            decoding="async"
+                            referrerPolicy="no-referrer"
+                            className="w-16 h-12 rounded-lg object-cover shrink-0 border border-sky-900/15 bg-slate-100 shadow-xs"
+                          />
+                          <div>
+                            <p className="font-bold text-[#071D38] group-hover:text-[#0B5ED7] transition-colors">
+                              {pkg.name}
+                            </p>
+                            <p className="text-xs text-slate-600 mt-0.5">{pkg.nameBn}</p>
+                          </div>
+                        </div>
                       </td>
                       <td className="py-3.5 px-6 font-mono-num font-semibold text-[#0B4F8A] whitespace-nowrap">
                         ৳ {pkg.price}
@@ -526,6 +548,7 @@ export const ServicesAndPricing: React.FC<ServicesAndPricingProps> = ({
               <img
                 src={selectedService.image}
                 alt={lang === 'bn' ? selectedService.titleBn : selectedService.titleEn}
+                referrerPolicy="no-referrer"
                 className="w-full h-full object-cover object-center"
               />
               <button
@@ -609,6 +632,7 @@ export const ServicesAndPricing: React.FC<ServicesAndPricingProps> = ({
               <img
                 src={selectedPackage.image}
                 alt={selectedPackage.name}
+                referrerPolicy="no-referrer"
                 className="w-full h-full object-cover object-center"
               />
               <button
