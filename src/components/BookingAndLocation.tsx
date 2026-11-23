@@ -570,27 +570,27 @@ export const BookingAndLocation: React.FC<BookingAndLocationProps> = ({
                 </div>
 
                 <div className="space-y-2.5 pt-4 border-t border-sky-300/15 text-sm">
-                  <div className="flex items-center justify-between gap-2">
+                  <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
                     <span className="text-sky-200">
                       {lang === 'bn' ? 'শনি, সোম, মঙ্গল ও বুধবার' : 'Sat, Mon, Tue & Wed'}
                     </span>
-                    <span className="font-semibold text-white font-mono-num">
+                    <span className="font-semibold text-white font-mono-num whitespace-nowrap">
                       {lang === 'bn' ? 'দুপুর ৩:০০ - রাত ৮:০০' : '3:00 PM - 8:00 PM'}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between gap-2">
+                  <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
                     <span className="text-sky-200">
                       {lang === 'bn' ? 'রবিবার ও বৃহস্পতিবার' : 'Sun & Thu'}
                     </span>
-                    <span className="font-semibold text-white font-mono-num">
+                    <span className="font-semibold text-white font-mono-num whitespace-nowrap">
                       {lang === 'bn' ? 'দুপুর ৩:০০ - বিকাল ৫:০০' : '3:00 PM - 5:00 PM'}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between gap-2">
+                  <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
                     <span className="text-sky-200">
                       {lang === 'bn' ? 'শুক্রবার' : 'Friday'}
                     </span>
-                    <span className="text-teal-300 font-medium">
+                    <span className="text-teal-300 font-medium whitespace-nowrap">
                       {lang === 'bn' ? 'বন্ধ (জরুরি প্রয়োজনে যোগাযোগ)' : 'Closed (Emergency Contact)'}
                     </span>
                   </div>

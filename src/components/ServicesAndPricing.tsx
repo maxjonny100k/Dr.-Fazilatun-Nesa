@@ -342,15 +342,13 @@ export const ServicesAndPricing: React.FC<ServicesAndPricingProps> = ({
           </div>
 
           {/* Category Filter Buttons (Crisp borders on inactive, distinct blue border on active) */}
-          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2">
-            {categories.map((cat, idx) => (
+          <div className="flex flex-wrap items-center gap-2">
+            {categories.map((cat) => (
               <button
                 key={cat.id}
                 type="button"
                 onClick={() => setCategory(cat.id)}
-                className={`px-3 sm:px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer whitespace-nowrap truncate text-center ${
-                  idx === 0 ? 'col-span-2 sm:col-span-1' : ''
-                } ${
+                className={`px-3 sm:px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer whitespace-nowrap text-center ${
                   category === cat.id
                     ? 'glossy-blue-btn text-white border-2 border-[#0B5ED7] shadow-sm'
                     : 'bg-white text-slate-700 border border-sky-900/25 hover:border-[#0B5ED7]/60 hover:text-[#071D38]'
@@ -384,39 +382,44 @@ export const ServicesAndPricing: React.FC<ServicesAndPricingProps> = ({
                   }}
                   className="optical-glass-light rounded-2xl p-4 border border-sky-900/20 active:scale-[0.99] transition-transform cursor-pointer space-y-3"
                 >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-start gap-3 min-w-0">
-                      <img
-                        src={pkg.image}
-                        alt={pkg.name}
-                        loading="lazy"
-                        decoding="async"
-                        referrerPolicy="no-referrer"
-                        className="w-16 h-12 rounded-xl object-cover shrink-0 border border-sky-900/15 bg-slate-100"
-                      />
-                      <div className="min-w-0">
-                        <span className="inline-block font-mono-num text-[11px] font-bold text-teal-800 mb-0.5">
-                          #{String(i + 1).padStart(2, '0')}
-                        </span>
-                        <h3 className="text-sm font-bold text-[#071D38] leading-snug break-words">
-                          {pkg.name}
-                        </h3>
-                        <p className="text-xs text-slate-600 mt-0.5 break-words">{pkg.nameBn}</p>
-                      </div>
-                    </div>
-                    <span className="shrink-0 font-mono-num text-xs font-bold text-[#0B4F8A] bg-white/90 border border-sky-900/15 px-2.5 py-1 rounded-lg">
+                  {/* Top Header Bar: Serial # + Package Price (Prevents narrow-column text squeezing) */}
+                  <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-sky-900/10">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-teal-900/10 font-mono-num text-[11px] font-bold text-teal-800">
+                      #{String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span className="shrink-0 font-mono-num text-xs font-bold text-[#0B4F8A] bg-white/95 border border-sky-900/15 px-2.5 py-1 rounded-lg whitespace-nowrap">
                       ৳ {pkg.price}
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between gap-2 pt-2 border-t border-sky-900/10">
+                  {/* Procedure Row: 4:3 Thumbnail + Full-Width Title & Bengali Subtitle */}
+                  <div className="flex items-start gap-3.5">
+                    <img
+                      src={pkg.image}
+                      alt={pkg.name}
+                      loading="lazy"
+                      decoding="async"
+                      referrerPolicy="no-referrer"
+                      className="w-20 aspect-[4/3] rounded-xl object-cover shrink-0 border border-sky-900/15 bg-slate-100"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-[15px] font-bold text-[#071D38] leading-snug">
+                        {pkg.name}
+                      </h3>
+                      <p className="text-xs sm:text-[13px] text-slate-600 mt-1 leading-relaxed">
+                        {pkg.nameBn}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between gap-2 pt-2.5 border-t border-sky-900/10">
                     <button
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
                         setSelectedPackage(pkg);
                       }}
-                      className="px-3 py-1.5 rounded-lg bg-white border border-sky-900/25 text-xs font-semibold text-[#0B4F8A] cursor-pointer"
+                      className="px-3 py-2 rounded-lg bg-white border border-sky-900/25 text-xs font-semibold text-[#0B4F8A] cursor-pointer whitespace-nowrap"
                     >
                       {lang === 'bn' ? 'ছবি ও বিস্তারিত' : 'Details & Photo'}
                     </button>
@@ -426,7 +429,7 @@ export const ServicesAndPricing: React.FC<ServicesAndPricingProps> = ({
                         e.stopPropagation();
                         onBookService(`${pkg.name} (${pkg.nameBn})`);
                       }}
-                      className="glossy-blue-btn px-3.5 py-1.5 rounded-lg text-white text-xs font-semibold cursor-pointer"
+                      className="glossy-blue-btn px-3.5 py-2 rounded-lg text-white text-xs font-semibold cursor-pointer whitespace-nowrap"
                     >
                       {lang === 'bn' ? 'সিরিয়াল নিন' : 'Book Serial'}
                     </button>
@@ -541,10 +544,10 @@ export const ServicesAndPricing: React.FC<ServicesAndPricingProps> = ({
           onClick={() => setSelectedService(null)}
         >
           <div
-            className="max-w-lg w-full optical-glass-light rounded-2xl text-[#071D38] overflow-hidden shadow-2xl"
+            className="max-w-lg w-full max-h-[90vh] overflow-y-auto optical-glass-light rounded-2xl text-[#071D38] shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative h-48 sm:h-52 w-full bg-[#061830]">
+            <div className="relative h-48 sm:h-52 w-full bg-[#061830] overflow-hidden rounded-t-2xl">
               <img
                 src={selectedService.image}
                 alt={lang === 'bn' ? selectedService.titleBn : selectedService.titleEn}
@@ -625,10 +628,10 @@ export const ServicesAndPricing: React.FC<ServicesAndPricingProps> = ({
           onClick={() => setSelectedPackage(null)}
         >
           <div
-            className="max-w-lg w-full optical-glass-light rounded-2xl text-[#071D38] overflow-hidden shadow-2xl"
+            className="max-w-lg w-full max-h-[90vh] overflow-y-auto optical-glass-light rounded-2xl text-[#071D38] shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative h-48 sm:h-56 w-full bg-[#061830]">
+            <div className="relative h-48 sm:h-56 w-full bg-[#061830] overflow-hidden rounded-t-2xl">
               <img
                 src={selectedPackage.image}
                 alt={selectedPackage.name}
@@ -646,8 +649,8 @@ export const ServicesAndPricing: React.FC<ServicesAndPricingProps> = ({
             </div>
 
             <div className="p-6 sm:p-7 space-y-5">
-              <div className="flex items-start justify-between gap-3">
-                <div>
+              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                <div className="min-w-0">
                   <p className="text-xs font-semibold text-teal-800">
                     {lang === 'bn' ? 'অপারেশন প্যাকেজ বিবরণ' : 'Surgery Package Overview'}
                   </p>
@@ -658,7 +661,7 @@ export const ServicesAndPricing: React.FC<ServicesAndPricingProps> = ({
                     {selectedPackage.nameBn}
                   </p>
                 </div>
-                <span className="shrink-0 font-mono-num text-sm sm:text-base font-bold text-[#071D38] bg-white border border-sky-900/20 px-3 py-1.5 rounded-xl">
+                <span className="w-fit shrink-0 whitespace-nowrap font-mono-num text-sm sm:text-base font-bold text-[#071D38] bg-white border border-sky-900/20 px-3 py-1.5 rounded-xl">
                   ৳ {selectedPackage.price}
                 </span>
               </div>
